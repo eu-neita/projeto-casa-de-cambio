@@ -1,0 +1,54 @@
+
+import Swal from 'sweetalert2'
+
+const BUTTON = document.getElementById('input-button');
+const DIV_RESULT = document.getElementById('cont-result')
+
+
+
+const getData = (func) => {
+  const INPUT = document.getElementById('coin-inp').value;
+  fetch(`https://api.exchangerate.host/latest?base=${INPUT}`).then((response) => response.json())
+    .then((data) => {
+      if (data.base !== INPUT ) {
+        throw new Error(error)
+      }
+      func(data)
+    }).catch((error) => {
+      Swal.fire({
+        title: 'ops... ',
+        text: 'Você precisa passar uma moeda',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } );
+}
+
+const printResult = ({ rates }) => { 
+
+  Object.keys(rates).forEach((coin, i) => {
+    const ol = document.createElement("ol");
+    const li = document.createElement("li");
+    li.innerHTML = `${coin} 
+    ${Object.values(rates).map((Values) => Values)[i]
+      .toFixed([3])}`;
+    ol.appendChild(li);
+    DIV_RESULT.appendChild(li);
+  });
+}
+
+
+
+window.onload = () => {
+  BUTTON.addEventListener('click', () => {
+  while (DIV_RESULT.firstChild) {
+    const veryfyNode = document.querySelector('li')
+    DIV_RESULT.removeChild(veryfyNode)  
+  }
+    getData(printResult)
+  });
+};
+
+
+
+// getData(printResult)
