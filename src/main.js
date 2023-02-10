@@ -7,17 +7,17 @@ const DIV_RESULT = document.getElementById('cont-result')
 
 
 const getData = (func) => {
-  const INPUT = document.getElementById('coin-inp').value;
+  const INPUT = document.getElementById('coin-inp').value.toUpperCase();
   fetch(`https://api.exchangerate.host/latest?base=${INPUT}`).then((response) => response.json())
     .then((data) => {
       if (data.base !== INPUT ) {
         throw new Error(error)
       }
       func(data)
-    }).catch((error) => {
+    }).catch(() => {
       Swal.fire({
         title: 'ops... ',
-        text: 'Você precisa passar uma moeda',
+        text: 'Você precisa passar uma moeda válida',
         icon: 'error',
         confirmButtonText: 'OK'
       })
@@ -29,9 +29,9 @@ const printResult = ({ rates }) => {
   Object.keys(rates).forEach((coin, i) => {
     const ol = document.createElement("ol");
     const li = document.createElement("li");
-    li.innerHTML = `${coin} 
+    li.innerHTML = `${coin}: <span class="yellow">
     ${Object.values(rates).map((Values) => Values)[i]
-      .toFixed([3])}`;
+      .toFixed([3])}</span>`;
     ol.appendChild(li);
     DIV_RESULT.appendChild(li);
   });
