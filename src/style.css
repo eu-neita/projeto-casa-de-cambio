@@ -29,6 +29,7 @@ h1 {
 
 .yellow {
   color: rgb(232, 225, 94);
+  font-weight: 800;
 }
 
 #coin-inp {
