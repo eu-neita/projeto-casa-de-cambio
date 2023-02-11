@@ -41,10 +41,7 @@ const printResult = ({ rates }) => {
 
 window.onload = () => {
   BUTTON.addEventListener('click', () => {
-  while (DIV_RESULT.firstChild) {
-    const veryfyNode = document.querySelector('li')
-    DIV_RESULT.removeChild(veryfyNode)  
-  }
+    DIV_RESULT.replaceChildren() 
     getData(printResult)
   });
 };
